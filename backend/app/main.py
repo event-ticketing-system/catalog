@@ -10,7 +10,8 @@ app = FastAPI()
 
 origins = [
     settings.CLIENT_ORIGIN,
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://localhost:3001"
 ]
 
 

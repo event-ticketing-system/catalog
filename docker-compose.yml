@@ -12,7 +12,9 @@ services:
     volumes:
       - mongo:/data/db
     ports:
-      - '6000:27017'
+      - '6003:27017'
+    networks:
+      - event-platform
 
   backend:
     build:
@@ -22,7 +24,9 @@ services:
     env_file:
       - ./.env
     ports:
-      - "8000:8000"
+      - "8080:8000"
+    networks:
+      - event-platform
     depends_on:
       - mongo
     volumes:
@@ -36,12 +40,18 @@ services:
     container_name: frontend_app
     ports:
       - "3000:3000"
+    networks:
+      - event-platform
     volumes:
       - ./frontend:/app
     working_dir: /app # Set the working directory to /app
     command: ["npm", "start"]
     depends_on:
       - backend
+
+networks:
+  event-platform:
+    driver: bridge
 
 volumes:
   mongo:

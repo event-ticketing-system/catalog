@@ -7,7 +7,7 @@ function EventList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/catalog/events")
+    fetch("http://localhost:8004/api/catalog/events")
       .then((res) => res.json())
       .then((data) => {
         const qtyMap = {};
@@ -42,7 +42,7 @@ function EventList() {
       order_time: new Date().toISOString()
     };
 
-    fetch("http://localhost:8001/api/orders", {
+    fetch("http://localhost:8002/api/orders", {
       method: "POST",
       credentials: 'include',
       headers: {
