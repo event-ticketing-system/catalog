@@ -11,6 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Debug working directory contents
       run: ls -la
 
