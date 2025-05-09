@@ -56,14 +56,13 @@ function EventList() {
           const errorText = await res.text();
           throw new Error(errorText || "Unknown error");
         }
-  
+    
         const contentType = res.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
           const data = await res.json();
-          alert("Order placed successfully!");
-          console.log(data);
-        } else {
-          alert("Order placed, but response format is unexpected.");
+          console.log("Order placed successfully!", data);
+          
+          window.location.href = "http://localhost:3002/";
         }
       })
       .catch(err => {
