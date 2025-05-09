@@ -79,7 +79,7 @@ function EventList() {
       {events.map((event) => {
         const imageSrc = event.image.startsWith("http")
           ? event.image
-          : `http://localhost:8000${event.image}`;
+          : `http://localhost:8004${event.image}`;
 
         return (
           <div key={event.id} className="event-card">

@@ -1,61 +1,87 @@
-.photo {
-    height: 250px;
-    width: 300px; 
+body {
+  margin: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.p-6 {
+  padding: 3rem;
+  text-align: center;
+}
+
+h1 {
+  color: #fff;
+  margin-bottom: 3rem;
 }
 
 .event-container {
-    display: flex; /* Align events horizontally */
-    flex-direction: row; /* Ensure horizontal layout */
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
-    gap: 20px; /* Space between events */
-  }
-  
-  .event-card {
-    width: 300px; /* Fixed width for each event card */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: white;
-  }
-  
-  .image-container {
-    width: 100%;
-    height: 200px; /* Fixed height for the image container */
-    overflow: hidden;
-    border-radius: 8px;
-    margin-bottom: 16px;
-  }
-  
-  .photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensure the image covers the entire container without distortion */
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 40px;
+}
 
-  .qty-selector {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  
-  .qty-selector button {
-    padding: 4px 10px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .buy-button {
-    margin-top: 10px;
-    padding: 6px 12px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .buy-button:hover {
-    background-color: #388e3c;
-  }
-  
+.event-card {
+  width: 300px;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  border: 5px solid rgb(130, 130, 130);
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+  color: #000;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  overflow: hidden; /* Ensure content stays within the rounded corners */
+  transition: box-shadow 0.3s ease-in-out; /* Add smooth transition for box-shadow */
+}
+
+/* Animated border using box-shadow */
+.event-card:hover {
+  box-shadow: 0 0 20px 5px rgba(0, 246, 255, 0.7), 0 0 20px 5px rgba(255, 0, 242, 0.7); /* Glow effect when hovered */
+}
+
+/* Adjusting the image container */
+.image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.qty-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.qty-selector button {
+  padding: 4px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.buy-button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.buy-button:hover {
+  background-color: #388e3c;
+}

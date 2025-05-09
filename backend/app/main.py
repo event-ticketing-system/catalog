@@ -10,6 +10,8 @@ from app.routers import catalog
 
 app = FastAPI()
 
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+
 origins = [
     settings.CLIENT_ORIGIN,
     "http://localhost:3000",
