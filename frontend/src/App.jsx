@@ -43,7 +43,7 @@ function EventList() {
       order_time: new Date().toISOString()
     };
   
-    fetch("http://localhost:8002/api/orders", {
+    fetch("http://localhost:8002/api/orders/", {
       method: "POST",
       credentials: 'include',
       headers: {
