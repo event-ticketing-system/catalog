@@ -16,11 +16,11 @@ jobs:
 
     - name: Build frontend image
       run: |
-        docker build -f ./Docker.frontend -t palani1703/catalog-frontend:latest frontend/
+        docker build -f ../Docker.frontend -t palani1703/catalog-frontend:latest frontend/
 
     - name: Build backend image
       run: |
-        docker build -f ./Docker.backend -t palani1703/catalog-backend:latest backend/
+        docker build -f ../Docker.backend -t palani1703/catalog-backend:latest backend/
 
     - name: Push frontend image
       run: docker push palani1703/catalog-frontend:latest
