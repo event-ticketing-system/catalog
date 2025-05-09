@@ -32,16 +32,17 @@ function EventList() {
   };
 
   const handleBuy = (event) => {
+    console.log("event passed to handleBuy:", event);
     const quantity = quantities[event.id];
     const payload = {
-      event_id: event.id,
+      event_id: String(event.id),
       event_name: event.name,
       quantity,
       price: event.price,
       total_price: event.price * quantity,
       order_time: new Date().toISOString()
     };
-
+  
     fetch("http://localhost:8002/api/orders", {
       method: "POST",
       credentials: 'include',
@@ -50,16 +51,27 @@ function EventList() {
       },
       body: JSON.stringify(payload)
     })
-      .then(res => res.json())
-      .then(data => {
-        alert("Order placed successfully!");
-        console.log(data);
+      .then(async res => {
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(errorText || "Unknown error");
+        }
+  
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const data = await res.json();
+          alert("Order placed successfully!");
+          console.log(data);
+        } else {
+          alert("Order placed, but response format is unexpected.");
+        }
       })
       .catch(err => {
         console.error("Order failed", err);
         alert("Order failed!");
       });
   };
+  
 
   if (loading) return <p>Loading events...</p>;
 

@@ -1,3 +1,5 @@
+import asyncio
+from app.consumer import consume_events
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -35,3 +37,7 @@ app.include_router(catalog.router, tags=['Catalog'], prefix='/api/catalog')
 @app.get("/api/healthchecker")
 def root():
     return {"message": "Welcome to FastAPI with MongoDB Catalog"}
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(consume_events())

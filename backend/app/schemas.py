@@ -1,8 +1,10 @@
 from datetime import datetime
+from typing import Optional
 from pydantic import BaseModel, HttpUrl
 
 
 class EventBaseModel(BaseModel):
+    id: Optional[str]
     name: str
     description: str
     location: str
