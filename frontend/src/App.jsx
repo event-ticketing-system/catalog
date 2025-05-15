@@ -31,8 +31,7 @@ function EventList() {
     }));
   };
 
-  const handleBuy = (event) => {
-    console.log("event passed to handleBuy:", event);
+  const handleBuy = async (event) => {
     const quantity = quantities[event.id];
     const payload = {
       event_id: String(event.id),
@@ -40,35 +39,43 @@ function EventList() {
       quantity,
       price: event.price,
       total_price: event.price * quantity,
-      order_time: new Date().toISOString()
+      order_time: new Date().toISOString(),
+      user_id: "mock_user"
     };
   
-    fetch("http://localhost:8002/api/orders/", {
-      method: "POST",
-      credentials: 'include',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
-      .then(async res => {
-        if (!res.ok) {
-          const errorText = await res.text();
-          throw new Error(errorText || "Unknown error");
-        }
-    
-        const contentType = res.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          const data = await res.json();
-          console.log("Order placed successfully!", data);
-          
-          window.location.href = "http://localhost:3002/";
-        }
-      })
-      .catch(err => {
-        console.error("Order failed", err);
-        alert("Order failed!");
+    try {
+      // Step 1: Create order
+      const orderRes = await fetch("http://localhost:8002/api/orders/create", {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
       });
+  
+      const orderData = await orderRes.json();
+      const paymentUrl = orderData.payment_url;
+  
+      if (!paymentUrl) {
+        alert("Payment URL not returned");
+        return;
+      }
+  
+      // Step 2: Call payment initiation API
+      const payRes = await fetch(paymentUrl);
+      const payData = await payRes.json();
+  
+      if (payData.payment_url) {
+        // Step 3: Open PhonePe QR in new tab
+        window.open(payData.payment_url, "_blank");
+      } else {
+        alert("Failed to get PhonePe payment URL");
+      }
+    } catch (err) {
+      console.error("Payment flow failed", err);
+      alert("Payment flow failed");
+    }
   };
   
 
@@ -112,7 +119,15 @@ function EventList() {
 export default function EventCatalogApp() {
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Browse Event Tickets</h1>
+      <h1 className="heading">
+        <span role="img" aria-label="party">🎉</span>
+        <span role="img" aria-label="popcorn">🍿</span>
+        <span role="img" aria-label="ticket">🎟️</span>
+        <span className="gradient-text"> Browse Event Tickets </span>
+        <span role="img" aria-label="party">🎟️</span>
+        <span role="img" aria-label="popcorn">🍿</span>
+        <span role="img" aria-label="ticket">🎉</span>
+      </h1>
       <EventList />
     </div>
   );

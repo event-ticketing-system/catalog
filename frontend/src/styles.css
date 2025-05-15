@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barrio&display=swap');
+
 body {
   margin: 0;
-  background-color: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #0f0f0f, #1a1a1a);
+  color: #e4e4e4;
+  font-family: 'Inter', sans-serif;  /* Default font for body */
 }
 
 .p-6 {
@@ -10,78 +13,114 @@ body {
   text-align: center;
 }
 
-h1 {
-  color: #fff;
-  margin-bottom: 3rem;
+.heading {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  font-family: 'Barrio', cursive;
+}
+
+.gradient-text {
+  color: transparent;
+  background: linear-gradient(145deg, #ffffff, #eaeaea);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .event-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-wrap: nowrap;
   overflow-x: auto;
-  gap: 20px;
-  padding-bottom: 40px;
+  gap: 24px;
+  padding: 2rem;
+  scroll-behavior: smooth;
 }
 
 .event-card {
-  width: 300px;
-  margin-top: 20px;
-  background-color: white;
-  border-radius: 10px;
-  border: 5px solid rgb(130, 130, 130);
-  padding: 16px;
+  flex: 0 0 300px;
+  background-color: #1f1f1f;
+  border-radius: 16px;
+  border: 1px solid #2e2e2e;
+  padding: 20px;
   position: relative;
-  z-index: 1;
-  color: #000;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  overflow: hidden; /* Ensure content stays within the rounded corners */
-  transition: box-shadow 0.3s ease-in-out; /* Add smooth transition for box-shadow */
+  color: #eaeaea;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Animated border using box-shadow */
 .event-card:hover {
-  box-shadow: 0 0 20px 5px rgba(0, 246, 255, 0.7), 0 0 20px 5px rgba(255, 0, 242, 0.7); /* Glow effect when hovered */
+  transform: translateY(-6px);
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.5), 0 0 25px rgba(255, 0, 200, 0.4);
 }
 
-/* Adjusting the image container */
 .image-container {
   width: 100%;
   height: 200px;
   overflow: hidden;
-  border-radius: 8px;
-  margin-bottom: 16px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
 }
 
 .photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.4s ease;
+}
+
+.event-card:hover .photo {
+  transform: scale(1.05);
 }
 
 .qty-selector {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 10px;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 .qty-selector button {
-  padding: 4px 10px;
+  padding: 6px 14px;
   font-size: 16px;
   cursor: pointer;
+  background-color: #2e2e2e;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.qty-selector button:hover {
+  background-color: #444;
 }
 
 .buy-button {
-  margin-top: 10px;
-  padding: 6px 12px;
-  background-color: #4caf50;
-  color: white;
+  margin-top: 16px;
+  padding: 10px 16px;
+  background: linear-gradient(145deg, #f8f8f8, #e0e0e0);
+  color: #111;
   border: none;
+  font-weight: 600;
+  font-size: 16px;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 8px;
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.4),
+    0 0 20px rgba(255, 255, 255, 0.2),
+    inset 0 0 5px rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
 }
 
 .buy-button:hover {
-  background-color: #388e3c;
+  background: linear-gradient(145deg, #ffffff, #eaeaea);
+  box-shadow:
+    0 0 15px rgba(255, 255, 255, 0.7),
+    0 0 25px rgba(255, 255, 255, 0.5),
+    inset 0 0 8px rgba(255, 255, 255, 0.8);
+  transform: scale(1.03);
 }

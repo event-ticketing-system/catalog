@@ -15,7 +15,9 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 origins = [
     settings.CLIENT_ORIGIN,
     "http://localhost:3000",
-    "http://localhost:3001"
+    "http://localhost:3001",
+    "http://localhost:8001",
+    "https://mercury-uat.phonepe.com"
 ]
 
 

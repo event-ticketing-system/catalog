@@ -4,6 +4,7 @@ from bson.objectid import ObjectId
 from ..serializers.catalogSerializers import eventEntity, orderRequest
 import os
 import shutil
+import httpx
 
 from app.database import Catalog, Orders
 from ..schemas import *
@@ -50,22 +51,39 @@ def create_event(event: EventBaseModel):
 
     return eventEntity(new_event)
 
+ORDER_SERVICE_URL = "http://localhost:8002/api/orders"  # Adjust if running on a different host/port
+
 @router.post("/orders")
-def create_order(order: OrderSchema):
+async def create_order(order: OrderSchema):
     if order.quantity <= 0:
         raise HTTPException(status_code=400, detail="Quantity must be at least 1")
 
     total_price = order.quantity * order.price
-    order_data = {
+
+    order_payload = {
         "event_id": order.event_id,
         "event_name": order.event_name,
         "quantity": order.quantity,
         "price": order.price,
         "total_price": total_price,
-        "order_time": datetime.utcnow(),
+        "user_id": "mock-user-123"  # Ideally passed from frontend or extracted from auth
     }
 
-    result = Orders.insert_one(order_data)
-    new_order = Orders.find_one({"_id": result.inserted_id})
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.post(
+                ORDER_SERVICE_URL,
+                json=order_payload,
+                params={"user_id": order_payload["user_id"]},  # since your order service requires it as a query param
+                follow_redirects=True
+            )
+        except httpx.RequestError as e:
+            raise HTTPException(status_code=500, detail=f"Order service error: {str(e)}")
 
-    return orderRequest(new_order)
+    if response.status_code != 200:
+        raise HTTPException(
+            status_code=response.status_code,
+            detail=f"Order service error: {response.text}"
+        )
+
+    return response.json()
